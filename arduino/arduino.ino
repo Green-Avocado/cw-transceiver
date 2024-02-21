@@ -41,14 +41,12 @@ bool display_changed = true;
 
 void setup_si5351()
 {
-  // The crystal load value needs to match in order to have an accurate calibration
   si5351.init(SI5351_CRYSTAL_LOAD_8PF, 0, 0);
 
   si5351.output_enable(SI5351_CLK0, 1);
   si5351.output_enable(SI5351_CLK1, 1);
   si5351.output_enable(SI5351_CLK2, 1);
 
-  // Start on target frequency
   si5351.set_correction(CAL_FACTOR, SI5351_PLL_INPUT_XO);
   si5351.set_pll(SI5351_PLL_FIXED, SI5351_PLLA);
 

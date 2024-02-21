@@ -85,6 +85,10 @@ void read_rotary_encoder()
   if (delta == 0) return;
 
   center_freq += delta * freq_step_list[freq_step_index];
+
+  if (center_freq > BAND_MAX) centre_freq = BANDMAX;
+  if (center_freq < BAND_MIN) centre_freq = BANDMIN;
+
   freq_changed = true;
 
   rotary_encoder_pos = newPos;

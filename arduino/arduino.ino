@@ -41,9 +41,6 @@ bool display_changed = true;
 
 void setup_si5351()
 {
-  // Start serial and initialize the Si5351
-  Serial.begin(9600);
-
   // The crystal load value needs to match in order to have an accurate calibration
   si5351.init(SI5351_CRYSTAL_LOAD_8PF, 0, 0);
 

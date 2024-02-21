@@ -18,20 +18,24 @@
 #define VFO_FREQ ( ( center_freq * SI5351_FREQ_MULT ) + IF_FREQ )
 
 // in hertz
-uint64_t center_freq = 7000000ULL;
-uint64_t freq_step = 500ULL;
+#define BAND_MIN 7000000ULL
+#define BAND_MAX 7040000ULL
 
-int rotary_encoder_pos;
+uint64_t center_freq = 7020000ULL;
+unsigned int freq_step_list[] = {1, 10, 100, 1000, 10000};
+unsigned int freq_step_index = 2;
 
-#define ROTARY_PIN1 7
-#define ROTARY_PIN2 8
-#define ROTARY_SWITCH 9
+#define ROTARY_SWITCH 4
+#define ROTARY_PIN1 5
+#define ROTARY_PIN2 6
+
+int rotary_encoder_pos = 0;
 
 Si5351 si5351;
 LiquidCrystal_I2C lcd(0x27,16,2);
-RotaryEncoder encoder(ROTARY_PIN1, ROTARY_PIN2, RotaryEncoder::LatchMode::TWO03);
+RotaryEncoder encoder(ROTARY_PIN1, ROTARY_PIN2, RotaryEncoder::LatchMode::FOUR3);
 
-bool rotary_switch = LOW;
+bool rotary_switch = HIGH;
 bool freq_changed = false;
 bool display_changed = true;
 
@@ -71,7 +75,6 @@ void setup_lcd()
 void setup_rotary_encoder()
 {
   encoder.tick();
-  rotary_encoder_pos = encoder.getPosition();
 
   pinMode(ROTARY_SWITCH, INPUT);
 }
@@ -80,23 +83,11 @@ void read_rotary_encoder()
 {
   encoder.tick();
   int newPos = encoder.getPosition();
-  int delta = 0;
-
-  switch (encoder.getDirection())
-  {
-    case RotaryEncoder::Direction::CLOCKWISE:
-      delta = (newPos - rotary_encoder_pos + 16) % 16;
-      break;
-    case RotaryEncoder::Direction::COUNTERCLOCKWISE:
-      delta = (newPos - rotary_encoder_pos - 16) % 16;
-      break;
-    case RotaryEncoder::Direction::NOROTATION:
-      break;
-  }
+  int delta = newPos - rotary_encoder_pos;
 
   if (delta == 0) return;
 
-  center_freq += delta * freq_step;
+  center_freq += delta * freq_step_list[freq_step_index];
   freq_changed = true;
 
   rotary_encoder_pos = newPos;
@@ -108,10 +99,12 @@ void read_rotary_switch()
 
   if (rotary_switch == newState) return;
 
-  if (newState == HIGH) {
-    freq_step = (freq_step + 10) % 1000;
+  if (newState == LOW) {
+    freq_step_index = (freq_step_index + 1) % (sizeof(freq_step_list) / sizeof(freq_step_list[0]));
   }
 
+  display_changed = true;
+  
   rotary_switch = newState;
 }
 
@@ -129,9 +122,14 @@ void update_vfo()
 void update_display()
 {
   if (!display_changed) return;
+
+  lcd.clear();
   
   lcd.setCursor(0,0);
   lcd.print((unsigned long)center_freq);
+  
+  lcd.setCursor(0,1);
+  lcd.print(freq_step_list[freq_step_index]);
 
   display_changed = false;
 }
@@ -150,5 +148,4 @@ void loop()
   read_rotary_switch();
   update_vfo();
   update_display();
-  delay(100);
 }

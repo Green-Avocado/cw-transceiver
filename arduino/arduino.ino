@@ -29,6 +29,8 @@ unsigned int freq_step_index = 2;
 #define ROTARY_PIN1 5
 #define ROTARY_PIN2 6
 
+#define DIGIT(x, y) (((x / y) % 10) + '0')
+
 int rotary_encoder_pos = 0;
 
 Si5351 si5351;
@@ -86,8 +88,8 @@ void read_rotary_encoder()
 
   center_freq += delta * freq_step_list[freq_step_index];
 
-  if (center_freq > BAND_MAX) centre_freq = BANDMAX;
-  if (center_freq < BAND_MIN) centre_freq = BANDMIN;
+  if (center_freq > BAND_MAX) center_freq = BAND_MAX;
+  if (center_freq < BAND_MIN) center_freq = BAND_MIN;
 
   freq_changed = true;
 
@@ -125,12 +127,58 @@ void update_display()
   if (!display_changed) return;
 
   lcd.clear();
-  
+
+  char line[17];
+
+  unsigned int i = 0;
+  line[i++] = ' ';
+  line[i++] = ' ';
+  line[i++] = DIGIT(center_freq, 1000000);
+  line[i++] = ' ';
+  line[i++] = DIGIT(center_freq, 100000);
+  line[i++] = DIGIT(center_freq, 10000);
+  line[i++] = DIGIT(center_freq, 1000);
+  line[i++] = ' ';
+  line[i++] = DIGIT(center_freq, 100);
+  line[i++] = DIGIT(center_freq, 10);
+  line[i++] = DIGIT(center_freq, 1);
+  line[i++] = ' ';
+  line[i++] = 'H';
+  line[i++] = 'z';
+  line[i++] = ' ';
+  line[i++] = ' ';
+  line[i++] = '\0';
+
   lcd.setCursor(0,0);
-  lcd.print((unsigned long)center_freq);
+  lcd.print(line);
+
+  i = 0;
+  line[i++] = ' ';
+  line[i++] = 's';
+  line[i++] = 't';
+  line[i++] = 'e';
+  line[i++] = 'p';
+  line[i++] = ' ';
+  line[i++] = DIGIT(freq_step_list[freq_step_index], 10000);
+  line[i++] = DIGIT(freq_step_list[freq_step_index], 1000);
+  line[i++] = ' ';
+  line[i++] = DIGIT(freq_step_list[freq_step_index], 100);
+  line[i++] = DIGIT(freq_step_list[freq_step_index], 10);
+  line[i++] = DIGIT(freq_step_list[freq_step_index], 1);
+  line[i++] = ' ';
+  line[i++] = 'H';
+  line[i++] = 'z';
+  line[i++] = ' ';
+  line[i++] = '\0';
+
+  for (i = 6; i < 12; i++) {
+    if (line[i] == ' ') continue;
+    if (line[i] != '0') break;
+    line[i] = 0;
+  }
   
   lcd.setCursor(0,1);
-  lcd.print(freq_step_list[freq_step_index]);
+  lcd.print(line);
 
   display_changed = false;
 }

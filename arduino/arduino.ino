@@ -67,9 +67,11 @@ void setup_lcd()
   lcd.init();
   lcd.backlight();
 
-  // Print a message to the LCD.
-  lcd.setCursor(1,0);
-  lcd.print("Hello, world!");
+  lcd.setCursor(3,0);
+  lcd.print("40m CW TRX");
+
+  lcd.setCursor(3,1);
+  lcd.print("DE VE7OWO");
 }
 
 void setup_rotary_encoder()

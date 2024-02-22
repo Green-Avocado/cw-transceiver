@@ -22,12 +22,12 @@
 #define BAND_MAX 7040000ULL
 
 uint64_t center_freq = 7020000ULL;
-unsigned int freq_step_list[] = {1, 10, 100, 1000, 10000};
-unsigned int freq_step_index = 2;
+int freq_step_list[] = {1, 10, 100, 1000, 10000};
+int freq_step_index = 2;
 
+#define ROTARY_PIN1 6
+#define ROTARY_PIN2 5
 #define ROTARY_SWITCH 4
-#define ROTARY_PIN1 5
-#define ROTARY_PIN2 6
 
 #define DIGIT(x, y) (((x / y) % 10) + '0')
 
@@ -174,7 +174,7 @@ void update_display()
   for (i = 6; i < 12; i++) {
     if (line[i] == ' ') continue;
     if (line[i] != '0') break;
-    line[i] = 0;
+    line[i] = ' ';
   }
   
   lcd.setCursor(0,1);

@@ -185,8 +185,8 @@ void update_display()
 
 void setup()
 {
-  setup_si5351();
   setup_lcd();
+  setup_si5351();
   setup_rotary_encoder();
   delay(1000);
 }

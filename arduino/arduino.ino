@@ -13,7 +13,7 @@
 // in hundredths of hertz
 #define CAL_FACTOR 150000
 #define TONE_FREQ 50000ULL
-#define IF_FREQ 400000000ULL
+#define IF_FREQ ( 400000000ULL - 50000ULL )
 #define BFO_FREQ ( IF_FREQ + TONE_FREQ )
 #define VFO_FREQ ( ( center_freq * SI5351_FREQ_MULT ) + IF_FREQ )
 

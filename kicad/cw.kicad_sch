@@ -6761,32 +6761,6 @@
     )
   )
 
-  (symbol (lib_id "Device:C") (at 266.7 242.57 90) (unit 1)
-    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
-    (uuid c105ca73-7824-4d4c-9234-1592e7702731)
-    (property "Reference" "C41" (at 266.7 234.95 90)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Value" "10p" (at 266.7 237.49 90)
-      (effects (font (size 1.27 1.27)))
-    )
-    (property "Footprint" "" (at 270.51 241.6048 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (at 266.7 242.57 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid 811582c4-62ee-4111-b8d6-b5358ed2461e))
-    (pin "2" (uuid 235f4b04-3d45-4fd5-bfd1-d25713f5c529))
-    (instances
-      (project "cw"
-        (path "/817248d0-f027-4dd0-8ccd-515a582be88c"
-          (reference "C41") (unit 1)
-        )
-      )
-    )
-  )
-
   (symbol (lib_id "Device:R") (at 515.62 264.16 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid c25021c0-c060-4bc2-9316-574f12ab57b8)
@@ -7056,6 +7030,32 @@
       (project "cw"
         (path "/817248d0-f027-4dd0-8ccd-515a582be88c"
           (reference "Q1") (unit 1)
+        )
+      )
+    )
+  )
+
+  (symbol (lib_id "Device:C") (at 266.7 242.57 90) (unit 1)
+    (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
+    (uuid cd4cc4a6-9a61-44bd-91c9-8aadbb308ab7)
+    (property "Reference" "C26" (at 266.7 234.95 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Value" "10p" (at 266.7 237.49 90)
+      (effects (font (size 1.27 1.27)))
+    )
+    (property "Footprint" "" (at 270.51 241.6048 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (property "Datasheet" "~" (at 266.7 242.57 0)
+      (effects (font (size 1.27 1.27)) hide)
+    )
+    (pin "1" (uuid de2fad4d-50c0-407b-92a3-fa92b832b8c2))
+    (pin "2" (uuid 70ab6bb2-4b9e-4b23-b880-53740f3ac803))
+    (instances
+      (project "cw"
+        (path "/817248d0-f027-4dd0-8ccd-515a582be88c"
+          (reference "C26") (unit 1)
         )
       )
     )
